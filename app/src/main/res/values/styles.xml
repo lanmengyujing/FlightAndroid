@@ -38,6 +38,17 @@
     <style name="FontHuge.White">
         <item name="android:textColor">@color/colorWhite</item>
     </style>
+    <style name="FontHuge.Teal">
+        <item name="android:textColor">@color/colorTeal</item>
+    </style>
+
+    <style name="FontLarge" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textSize">28sp</item>
+    </style>
+
+    <style name="FontLarge.White">
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
 
     <style name="FlightAirportWrap" parent='FontHuge.White'>
         <item name="android:maxLines">1</item>
