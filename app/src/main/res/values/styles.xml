@@ -3,7 +3,6 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:background">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/colorWhite</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -22,5 +21,27 @@
     </style>
 
     <style name="FullscreenActionBarStyle.Pop" parent="Theme.AppCompat.Light.NoActionBar" />
+
+    <style name="FlightButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">sans-serif-regular</item>
+    </style>
+
+    <style name="FontHuge" parent="TextAppearance.AppCompat.Display3">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">56sp</item>
+    </style>
+
+    <style name="FontHuge.White">
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="FlightAirportWrap" parent='FontHuge.White'>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
 
 </resources>
