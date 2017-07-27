@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 class SearchResultAdapter extends RecyclerView.Adapter<FlightViewHolder> {
-    private String[] data;
+    private Flight[] data = new Flight[]{};
 
     @Override
     public FlightViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -18,13 +18,17 @@ class SearchResultAdapter extends RecyclerView.Adapter<FlightViewHolder> {
 
     @Override
     public void onBindViewHolder(FlightViewHolder holder, int position) {
-        holder.flightStartText.setText("A");
-        holder.flightEndText.setText("B");
+        holder.flightStartText.setText(data[position].getStart());
+        holder.flightEndText.setText(data[position].getEnd());
     }
 
     @Override
     public int getItemCount() {
-        return 1;
+        return data.length;
+    }
+
+    public void setData(Flight[] data) {
+        this.data = data;
     }
 }
 

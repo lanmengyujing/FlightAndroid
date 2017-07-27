@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/colorPink"
             android:text="@string/airport_jfk"
+            android:paddingLeft="20dp"
             android:layout_toRightOf="@+id/flight_small_icon"
             />
         <TextView
@@ -36,6 +37,7 @@
             android:text="@string/airport_sfo"
             android:textColor="@color/colorPink"
             android:layout_below="@+id/from"
+            android:paddingLeft="20dp"
             android:layout_toRightOf="@+id/flight_small_icon"
             />
 

@@ -14,6 +14,11 @@ public class ResultsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_results);
         RecyclerView recycleView = (RecyclerView) findViewById(R.id.list_view);
         recycleView.setLayoutManager(new LinearLayoutManager(this));
-        recycleView.setAdapter(new SearchResultAdapter());
+        SearchResultAdapter adapter = new SearchResultAdapter();
+        recycleView.setAdapter(adapter);
+
+        Flight flight = new Flight("JFK", "SFO");
+        Flight[] data = new Flight[]{flight, flight, flight, flight};
+        adapter.setData(data);
     }
 }
