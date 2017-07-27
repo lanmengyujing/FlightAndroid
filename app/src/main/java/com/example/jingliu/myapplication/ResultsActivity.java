@@ -3,7 +3,7 @@ package com.example.jingliu.myapplication;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class Results extends AppCompatActivity {
+public class ResultsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
