@@ -28,6 +28,7 @@
             android:layout_marginBottom="0dp"
             >
             <TextView
+                android:id="@+id/from"
                 style="@style/FlightAirportWrap"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -44,6 +45,7 @@
                 android:contentDescription="@drawable/ic_flight_white_48dp"
                 android:src="@drawable/ic_flight_white_48dp"/>
             <TextView
+                android:id="@+id/to"
                 style="@style/FlightAirportWrap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

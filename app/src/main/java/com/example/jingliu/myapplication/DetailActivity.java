@@ -6,8 +6,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 public class DetailActivity extends AppCompatActivity {
+    public static final String BUNDLE_KEY_END = "BUNDLE_KEY_END";
+    public static final String BUNDLE_KEY_START = "BUNDLE_KEY_START";
+    private TextView flightStartText;
+    private TextView flightEndText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +26,20 @@ public class DetailActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_IMMERSIVE);
 
         setupToolbar();
+        initViews();
+        initData();
+    }
+
+    private void initViews() {
+        flightStartText = (TextView) findViewById(R.id.from);
+        flightEndText = (TextView) findViewById(R.id.to);
+    }
+
+    private void initData() {
+        final String start = getIntent().getStringExtra(BUNDLE_KEY_END);
+        final String end = getIntent().getStringExtra(BUNDLE_KEY_START);
+        flightStartText.setText(start);
+        flightEndText.setText(end);
     }
 
     @Override
@@ -29,7 +48,7 @@ public class DetailActivity extends AppCompatActivity {
         return true;
     }
 
-    private void setupToolbar(){
+    private void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
