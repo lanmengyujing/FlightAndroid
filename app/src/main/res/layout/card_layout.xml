@@ -1,45 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="wrap_content"
     android:layout_margin="20dp"
     app:cardCornerRadius="3dp"
-    app:cardElevation="4dp">
+    app:cardElevation="4dp"
+    tools:ignore="RtlSymmetry">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:padding="16dp">
 
         <ImageView
+            android:padding="6dp"
             android:id="@+id/flight_small_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_flight_white_48dp"
             android:layout_centerVertical="true"
-            android:paddingTop="25dp"
-            />
+            android:src="@drawable/ic_flight_white_48dp" />
+
         <TextView
             android:id="@+id/from"
             style="@style/FontHuge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorPink"
-            android:text="@string/airport_jfk"
-            android:paddingLeft="20dp"
-            android:layout_toRightOf="@+id/flight_small_icon"
-            />
+            android:layout_toEndOf="@+id/flight_small_icon"
+            android:layout_marginStart="20dp"
+            tools:text="@string/airport_jfk"
+            android:textColor="@color/colorPink" />
+
         <TextView
             android:id="@+id/to"
             style="@style/FontHuge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/airport_sfo"
-            android:textColor="@color/colorPink"
             android:layout_below="@+id/from"
-            android:paddingLeft="20dp"
-            android:layout_toRightOf="@+id/flight_small_icon"
-            />
+            android:layout_toEndOf="@+id/flight_small_icon"
+            android:layout_alignStart="@id/from"
+            tools:text="@string/airport_sfo"
+            android:textColor="@color/colorPink" />
 
     </RelativeLayout>
 
