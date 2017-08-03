@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -17,17 +19,19 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public class ResultsActivity extends AppCompatActivity {
+    private ProgressBar progressBar;
+    private RecyclerView recycleView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
-        RecyclerView recycleView = (RecyclerView) findViewById(R.id.list_view);
+        initView();
+
         recycleView.setLayoutManager(new LinearLayoutManager(this));
         SearchResultAdapter adapter = new SearchResultAdapter();
         recycleView.setAdapter(adapter);
@@ -35,17 +39,28 @@ public class ResultsActivity extends AppCompatActivity {
         createAsync(adapter);
     }
 
+    private void initView() {
+        recycleView = (RecyclerView) findViewById(R.id.list_view);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+    }
+
     public void createAsync(SearchResultAdapter adapter) {
+        recycleView.setVisibility(View.GONE);
+
         Flowable.just(R.raw.flight)
                 .map(getResources()::openRawResource)
                 .map(InputStreamReader::new)
-                .map(v -> new Gson().fromJson(v, new TypeToken<List<Flight>>() {}.getType()))
+                .map(v -> new Gson().fromJson(v, new TypeToken<List<Flight>>() {
+                }.getType()))
                 .subscribeOn(Schedulers.io())
                 .delay(3, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                     adapter.addFlight((List<Flight>) o);
                     adapter.notifyDataSetChanged();
+
+                    recycleView.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
                 });
     }
 
