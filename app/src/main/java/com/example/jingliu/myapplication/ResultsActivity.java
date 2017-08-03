@@ -1,5 +1,6 @@
 package com.example.jingliu.myapplication;
 
+import android.content.res.AssetManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,8 @@ import com.google.gson.reflect.TypeToken;
 
 import org.reactivestreams.Publisher;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -25,6 +28,7 @@ import io.reactivex.schedulers.Schedulers;
 public class ResultsActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private RecyclerView recycleView;
+    private SearchResultAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +37,15 @@ public class ResultsActivity extends AppCompatActivity {
         initView();
 
         recycleView.setLayoutManager(new LinearLayoutManager(this));
-        SearchResultAdapter adapter = new SearchResultAdapter();
+        adapter = new SearchResultAdapter();
         recycleView.setAdapter(adapter);
 
-        createAsync(adapter);
+        try {
+            loadDataFromAssets();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        createAsync(adapter);
     }
 
     private void initView() {
@@ -44,14 +53,34 @@ public class ResultsActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     }
 
-    public void createAsync(SearchResultAdapter adapter) {
+    public void loadDataFromAssets() throws IOException {
+
+        AssetManager assetManager = getAssets();
+
+        String[] files = assetManager.list("");
+        System.out.println(files[0]);
+
+        InputStream input = assetManager.open("flight.json");
+        InputStreamReader inputStreamReader = new InputStreamReader(input);
+
+        Object flight = new Gson().fromJson(inputStreamReader, new TypeToken<List<Flight>>() {
+        }.getType());
+        adapter.addFlight((List<Flight>) flight);
+    }
+
+    public void createAsync() {
         recycleView.setVisibility(View.GONE);
 
         Flowable.just(R.raw.flight)
                 .map(getResources()::openRawResource)
                 .map(InputStreamReader::new)
-                .map(v -> new Gson().fromJson(v, new TypeToken<List<Flight>>() {
-                }.getType()))
+                .map(new Function<InputStreamReader, Object>() {
+                    @Override
+                    public Object apply(@NonNull InputStreamReader v) throws Exception {
+                        return new Gson().fromJson(v, new TypeToken<List<Flight>>() {
+                        }.getType());
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .delay(3, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
