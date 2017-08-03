@@ -7,11 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.AbstractList;
+import java.util.List;
+
 import static com.example.jingliu.myapplication.DetailActivity.BUNDLE_KEY_END;
 import static com.example.jingliu.myapplication.DetailActivity.BUNDLE_KEY_START;
 
 class SearchResultAdapter extends RecyclerView.Adapter<FlightViewHolder> {
     private Flight[] data = new Flight[]{};
+    private List<Flight> flightList;
 
     @Override
     public FlightViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -33,6 +37,10 @@ class SearchResultAdapter extends RecyclerView.Adapter<FlightViewHolder> {
 
     public void setData(Flight[] data) {
         this.data = data;
+    }
+
+    public void addFlight(List<Flight> flightList) {
+        this.data = flightList.toArray(data);
     }
 }
 
