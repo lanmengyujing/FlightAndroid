@@ -56,16 +56,26 @@ public class ResultsActivity extends AppCompatActivity {
     public void loadDataFromAssets() throws IOException {
 
         AssetManager assetManager = getAssets();
-
-        String[] files = assetManager.list("");
-        System.out.println(files[0]);
-
         InputStream input = assetManager.open("flight.json");
-        InputStreamReader inputStreamReader = new InputStreamReader(input);
+        Flowable.just(input)
+                .map(InputStreamReader::new)
+                .map(new Function<InputStreamReader, Object>() {
+                    @Override
+                    public Object apply(@NonNull InputStreamReader v) throws Exception {
+                        return new Gson().fromJson(v, new TypeToken<List<Flight>>() {
+                        }.getType());
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .delay(3, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                    adapter.addFlight((List<Flight>) o);
+                    adapter.notifyDataSetChanged();
 
-        Object flight = new Gson().fromJson(inputStreamReader, new TypeToken<List<Flight>>() {
-        }.getType());
-        adapter.addFlight((List<Flight>) flight);
+                    recycleView.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                });
     }
 
     public void createAsync() {
